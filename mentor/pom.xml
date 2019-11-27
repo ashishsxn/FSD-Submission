@@ -1,5 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -7,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ibm</groupId>
-	<artifactId>server</artifactId>
+	<artifactId>mentor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>server</name>
-	<description>gateway server</description>
+	<name>mentor</name>
+	<description>mentor client</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,27 +20,31 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-		<spring-cloud.version>Greenwich.SR3</spring-cloud.version>
+        <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
@@ -55,8 +61,23 @@
 	</dependencyManagement>
 
 	<build>
-        <finalName>mod-server</finalName>
+        <finalName>mod-mentor</finalName>
         <plugins>
+        	<plugin>
+         		<groupId>com.spotify</groupId>
+         		<artifactId>docker-maven-plugin</artifactId>
+         		<version>1.0.0</version> 
+         		<configuration>
+            		<imageName>${project.artifactId}</imageName>
+            		<dockerDirectory>src/main/resources/docker</dockerDirectory>
+            		<resources>
+               			<resource>
+                  			<directory>${project.build.directory}</directory>
+                  			<include>${project.build.finalName}.jar</include>
+               			</resource>
+            		</resources>
+         		</configuration>
+      		</plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -68,7 +89,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.ibm.server.ServerApplication</mainClass>
+                    <mainClass>com.ibm.mentor.MentorApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
