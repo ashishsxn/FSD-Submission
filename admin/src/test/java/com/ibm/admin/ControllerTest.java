@@ -90,11 +90,4 @@ public class ControllerTest {
 		System.out.println(result.getResponse());
 	}
 	
-	@Test
-	@Ignore
-	public void retrieveAdminUserListById(){
-		Users users = new Users();
-
-	}
-	
 }
