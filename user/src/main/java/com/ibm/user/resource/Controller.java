@@ -24,18 +24,6 @@ public class Controller {
     CourseService courseService;
 
 
-    @RequestMapping("")
-    public String hi() {
-         return "Hi";
-    }
-
-    @RequestMapping("/hello")
-    public String hello() {
-        return "Hello!";
-    }
-
-    
-
     @RequestMapping("/courses")
     public List<Course> getCourseList(){
         return courseService.getCourseList();
