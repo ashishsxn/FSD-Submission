@@ -26,16 +26,6 @@ public class Controller {
     SkillService skillService;
 
    
-    @RequestMapping("")
-    public String hi() {
-        return "Hi";
-    }
-
-    @RequestMapping("/hello")
-    public String hello() {
-        return "Hello!";
-    }
-
     @RequestMapping("/mentors")
     public List<MentorSignUpModel> getList(){
         return userService.getUserList();
